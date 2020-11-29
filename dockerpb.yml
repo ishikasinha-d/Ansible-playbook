@@ -1,0 +1,37 @@
+- hosts: all
+  tasks:
+
+  - yum_repository:
+    name: "docker-ce"
+    baseurl: "https://download.docker.com/linux/centos/7/x86-64/stable/"
+    description: "configuring yum for docker"
+    gpgcheck: no
+
+  - package:
+    name: "docker-ce"
+    state: present
+
+  - service:
+    name: "docker"
+    state: started
+    enabled: yes
+
+  - command: "pip3 install docker"
+
+  - copy:
+    src: "mywebpage.html"
+    dest: "/var/www/html"
+
+  - docker_image:
+    name: "httpd"
+    source: pull
+    
+  - docker_container:
+    name: "mydocker_os"
+    image:  httpd
+    state:  started
+    volumes: "/var/www/html:/usr/local/apache2/htdocs/"
+    expose:
+        - "1234"
+    ports:
+        - "1234:80" 
