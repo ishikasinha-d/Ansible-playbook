@@ -1,0 +1,6 @@
+<configuration>
+<property>
+<name>fs.default.name</name>
+<value>hdfs://{{ansible_facts["default_ipv4"]["address"]}}:9001</value>
+</property>
+</configuration>

@@ -1,0 +1,6 @@
+<configuration>
+<property>
+<name>dfs.data.dir</name>
+<value>{{dn_dir}}</value>
+</property>
+</configuration>

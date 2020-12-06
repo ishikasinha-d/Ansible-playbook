@@ -1,0 +1,46 @@
+- hosts: dn
+  vars:
+  - dn_dir: "/dn"
+  - hadoop_software: "/root/hadoop-1.2.1-1.x86_64"
+  - jdk_software: "/root/jdk1.8-1.8.0_171-fcs.x86_64"
+  tasks:
+  - name: "Copying JDK RPM file"
+    copy:
+      src: "{{jdk_software}}"
+      dest: "/root/"
+  - name: "Copying Hadoop RPM file"
+    copy:
+      src: "{{hadoop_software}}"
+      dest: "/root/"
+  - name: "Installing Java JDK"
+    command: "rpm -ivh '{{jdk_software}}'"
+    ignore_errors: yes
+  - name: "Installing Hadoop"
+    command: "rpm -ivh '{{hadoop_software}}' --force"
+    ignore_errors: yes
+  - name: "Creating directory dn for namenode"
+    file:
+      path: "dn_dir"
+      state: directory
+  - name: "Copying hdfs.site.xml configuration"
+    template:
+      src: "/root/dn_hdfs.txt"
+      dest: "/etc/hadoop/hdfs.site.xml"
+  - name: "Copying core.site.xml configuration"
+    template:
+      src: "/root/dn_core.txt"
+      dest: "/etc/hadoop/core.site.xml"
+  - name: "Starting the service"
+    command: "hadoop-daemon.sh start datanode"
+    ignore_errors: yes
+  - name: "checking whether the process started or not"
+    command: "jps"
+    register: jps
+  - debug:
+      var:
+        jps.stdout
+      
+
+
+
+
