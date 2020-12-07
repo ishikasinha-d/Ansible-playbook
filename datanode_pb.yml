@@ -1,8 +1,8 @@
 - hosts: dn
   vars:
   - dn_dir: "/dn"
-  - hadoop_software: "/root/hadoop-1.2.1-1.x86_64"
-  - jdk_software: "/root/jdk1.8-1.8.0_171-fcs.x86_64"
+  - hadoop_software: "/root/hadoop-1.2.1-1.x86_64.rpm"
+  - jdk_software: "/root/jdk-8u171-linux-x64.rpm"
   tasks:
   - name: "Copying JDK RPM file"
     copy:
@@ -22,14 +22,14 @@
     file:
       path: "dn_dir"
       state: directory
-  - name: "Copying hdfs.site.xml configuration"
+  - name: "Copying hdfs-site.xml configuration"
     template:
       src: "/root/dn_hdfs.txt"
-      dest: "/etc/hadoop/hdfs.site.xml"
-  - name: "Copying core.site.xml configuration"
+      dest: "/etc/hadoop/hdfs-site.xml"
+  - name: "Copying core-site.xml configuration"
     template:
       src: "/root/dn_core.txt"
-      dest: "/etc/hadoop/core.site.xml"
+      dest: "/etc/hadoop/core-site.xml"
   - name: "Starting the service"
     command: "hadoop-daemon.sh start datanode"
     ignore_errors: yes
