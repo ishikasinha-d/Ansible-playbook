@@ -1,8 +1,8 @@
 - hosts: nn
   vars:
   - nn_dir: "/nn"
-  - hadoop_software: "/root/hadoop-1.2.1-1.x86_64"
-  - jdk_software: "/root/jdk1.8-1.8.0_171-fcs.x86_64"
+  - hadoop_software: "/root/hadoop-1.2.1-1.x86_64.rpm"
+  - jdk_software: "/root/jdk-8u171-linux-x86.rpm"
   tasks:
   - name: "Copying JDK RPM file"
     copy:
@@ -22,14 +22,14 @@
     file:
       path: "nn_dir"
       state: directory
-  - name: "Copying hdfs.site.xml configuration"
+  - name: "Copying hdfs-site.xml configuration"
     template:
       src: "/root/nn_hdfs.xml"
-      dest: "/etc/hadoop/hdfs.site.xml"
-  - name: "Copying core.site.xml configuration"
+      dest: "/etc/hadoop/hdfs-site.xml"
+  - name: "Copying core-site.xml configuration"
     template:
       src: "/root/nn_core.xml"
-      dest: "/etc/hadoop/core.site.xml"
+      dest: "/etc/hadoop/core-site.xml"
   - name: "formatting the namenode"
     command: "hadoop namenode -format "
     ignore_errors: yes
