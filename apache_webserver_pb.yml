@@ -1,0 +1,56 @@
+- hosts: myweb
+
+  vars:
+     - include_vars: vars.yml
+
+  tasks:
+
+  - file:
+        state: directory
+        path: "/{{ dvd_dir }}"
+
+  - mount:
+        src: "/dev/cdrom"
+        path: "/{{ dvd_dir }}"
+        state: mounted
+        fstype: "iso9660"
+
+  - yum_repository:
+        baseurl: "/{{ dvd_dir }}/AppStream"
+        name: "AppStream"
+        description: "AppStream softwares"
+        gpgcheck: no
+   
+  - yum_repository:
+        baseurl: "//{{ dvd_dir }}/BaseOS"
+        name: "BaseOS"
+        description: "BaseOS softwares"
+        gpgcheck: no
+
+  - package:
+        name: "httpd"
+        state: present
+    when: os_name == "RedHat"
+
+  - copy:
+        dest: "{{ doc_root }}/index.html"
+        content: "Hello world"
+
+  - template:
+        dest: "/etc/httpd/conf.d/web.conf"
+        src: "web.conf"
+    notify:
+    - Restart httpd
+
+  - firewalld:
+        port: "{{ port }}/tcp"
+        state: enabled
+        permanent: yes
+        immediate: yes
+
+  handlers:
+  - name: Restart httpd
+    service:
+        name: "httpd"
+        state: "restarted"
+        enabled: yes

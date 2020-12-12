@@ -1,0 +1,4 @@
+dvd_dir: "/dvd1"
+port: 8080
+os_name: ansible_facts['distribution']
+doc_root: "/var/www/myweb"
