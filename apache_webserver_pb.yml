@@ -1,7 +1,7 @@
 - hosts: myweb
 
-  vars:
-     - include_vars: vars.yml
+  vars_files:
+     -"vars.yml"
 
   tasks:
 
