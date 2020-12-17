@@ -38,17 +38,17 @@
   tasks:
   - name: installing haproxy
     package: 
-        - name: haproxy
+          name: haproxy
           state: present
   - name: installing httpd
     package: 
-        - name: httpd
+          name: httpd
           state: present
-  tasks:
-      - name: updating the port of protocol
-        template:
-              dest: "/etc/haproxy/haproxy.cfg"
-              src: "/ws1/haproxy.cfg.j2"
+
+  - name: updating the port of protocol
+    template:
+        dest: "/etc/haproxy/haproxy.cfg"
+        src: "/ws1/haproxy.cfg.j2"
         notify:
         - restart haproxy
         - restart httpd
