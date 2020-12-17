@@ -1,0 +1,68 @@
+- hosts: backend_servers
+  vars_prompt:
+  - name: file_name
+    private: no
+    prompt: "Enter the WebApp file name"
+  tasks:
+  - name: installing httpd
+    package: 
+        name: httpd
+        state: present
+  - name: installing php
+    package:
+        name: php
+        state: present
+  - copy:
+        dest: "/var/www/html/{{ file_name }}.php"
+        content: |
+                <pre>
+                <?php
+                print `/usr/sbin/ifconfig`;
+                ?>
+                </pre>
+        notify: restart httpd
+  handlers:
+  - name: restart httpd
+    service: 
+      name: httpd
+      state: started
+
+- hosts: load_balancer
+  vars_prompt:
+  - name: port_fs
+    prompt: "port of front end server "
+    private: no
+  - name: port_bs
+    prompt: "port of backend servers "
+    private: no
+  tasks:
+  - name: installing haproxy
+    package: 
+        - name: haproxy
+          state: present
+  - name: installing httpd
+    package: 
+        - name: httpd
+          state: present
+  tasks:
+      - name: updating the port of protocol
+        template:
+              dest: "/etc/haproxy/haproxy.cfg"
+              src: "/ws1/haproxy.cfg.j2"
+        notify:
+        - restart haproxy
+        - restart httpd
+  handlers:
+  - name: restart haproxy
+    service:
+        name: haproxy
+        state:  restarted
+  - name: restart httpd
+    service:
+        name: httpd
+        state:  restarted
+
+         
+
+ 
+ 
