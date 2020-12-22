@@ -12,7 +12,7 @@
     🔹 Copy the html code in /var/www/html directory and start the web server
    
  
- Other files associated with dockerpb.yml are: mywebpage.html
+    Other files associated with dockerpb.yml are: mywebpage.html
     
  Linkedin Blog URL:   https://www.linkedin.com/pulse/configuring-docker-using-ansible-ishika-sinha
 
@@ -21,8 +21,8 @@
     namenode_pb.yml is to configure Namenode
     datanode_pb.yml is to configure Datanode
   
- Other files associated with namenode_pb.yml are: nn_core.xml and nn_hdfs.xml
- Other files associated with datanode_pb.yml are: dn_core.xml and dn_hdfs.xml 
+    Other files associated with namenode_pb.yml are: nn_core.xml and nn_hdfs.xml
+    Other files associated with datanode_pb.yml are: dn_core.xml and dn_hdfs.xml 
     
  Linkedin Blog URL:  https://www.linkedin.com/pulse/ansible-playbook-set-up-hdfs-cluster-ishika-sinha
  
@@ -31,7 +31,14 @@ For this, we make use of handlers.
 
     apache_webserver_pb.yml 
 
-Other files associated with apache_webserver_pb.yml are: vars.yml and web.conf 
+    Other files associated with apache_webserver_pb.yml are: vars.yml and web.conf 
 
 Linkedin Blog URL: https://www.linkedin.com/pulse/making-httpd-service-idempotent-using-ansible-ishika-sinha
+
+➡️ To configure Reverse Proxy i.e. Haproxy and update its configuration file automatically each time a new Managed node (Configured With Apache Webserver) joins the inventory.
+
+    Playbook: haproxy_pb.yml
+    Configuration file: haproxy.cfg.j2
+    
+Linkedin Blog URL: https://www.linkedin.com/pulse/configuring-haproxy-updating-dynamically-using-ansible-ishika-sinha
     
