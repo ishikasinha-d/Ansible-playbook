@@ -12,7 +12,7 @@
     package:
         name: php
         state: present
-  - copy:
+  - template:
         dest: "/var/www/html/{{ file_name }}.php"
         content: |
                 <pre>
